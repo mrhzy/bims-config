@@ -23,7 +23,7 @@ spring:
             name: admin
             password: talentbi
     application:
-        name: bims-config-client
+        name: bims-config-eureka-server1
 ---
 server:
     port: 7002
@@ -45,4 +45,4 @@ spring:
             name: admin
             password: talentbi
     application:
-        name: bims-config-client
+name: bims-config-eureka-server1
