@@ -1,0 +1,30 @@
+spring:
+    profiles:
+        active:
+            - dev
+---
+server:
+    port: 8201
+
+spring:
+    profiles: dev
+    application:
+        name: bimsconfig-test-client
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://admin:talentbi@localhost:7001/eureka
+---
+server:
+    port: 8102
+
+spring:
+    profiles: beta
+    application:
+        name: bimsconfig-test-client
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://admin:talentbi@localhost:7001/eureka
