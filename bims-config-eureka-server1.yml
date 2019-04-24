@@ -4,45 +4,85 @@ spring:
             - dev
 ---
 server:
-    port: 7001
-eureka:
-    server:
-        eviction-interval-timer-in-ms: 1000   #设置清理的间隔时间，而后这个时间使用的是毫秒单位（默认是60秒）
-        enable-self-preservation: false #设置为false表示关闭保护模式
-    client:
-        fetch-registry: false
-        register-with-eureka: false
-        service-url:
-            defaultZone: http://admin:talentbi@localhost:7001/eureka
-    instance: # eureak实例定义
-        hostname: localhost # 定义 Eureka 实例所在的主机名称
+    port: 8080
+mybatis:
+    mapper-locations: # 所有的mapper映射文件
+        - classpath:mapping/*.xml
 spring:
-    profiles: dev
-    security:
-        user:
-            name: admin
-            password: talentbi
     application:
-        name: bims-config-eureka-server1
+        name: bims-config-customerservice-client
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource # 配置当前要使用的数据源的操作类型
+        driver-class-name: com.mysql.jdbc.Driver # 配置MySQL的驱动程序类
+        url: jdbc:mysql://localhost:3306/springcloud?serverTimezone=GMT%2B8 # 数据库连接地址
+        username: root # 数据库用户名
+        password: root # 数据库连接密码
+    profiles: dev
+eureka:
+    client: # 客户端进行Eureka注册的配置
+        service-url:
+            defaultZone: http://admin:talentbi@eureka1:7001/eureka
+    instance:
+        instance-id: bims-config-customerservice-client
+        prefer-ip-address: true
+        lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
+        lease-expiration-duration-in-seconds: 5  # 如果现在超过了5秒的间隔（默认是90秒）
+
+#
+info:
+    app.name: bims-config-customerservice-client
+    company.name: zkh
+    build.artifactId: $project.artifactId$
+    build.modelVersion: $project.modelVersion$
+#
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+
+logging:
+    level:
+        com.zkh.bims.mapper: debug
 ---
 server:
-    port: 7002
-eureka:
-    server:
-        eviction-interval-timer-in-ms: 1000   #设置清理的间隔时间，而后这个时间使用的是毫秒单位（默认是60秒）
-        enable-self-preservation: false #设置为false表示关闭保护模式
-    client:
-        fetch-registry: false
-        register-with-eureka: false
-        service-url:
-            defaultZone: http://admin:talentbi@localhost:7002/eureka
-    instance: # eureak实例定义
-        hostname: localhost # 定义 Eureka 实例所在的主机名称
+    port: 8081
+mybatis:
+    mapper-locations: # 所有的mapper映射文件
+        - classpath:mapping/*.xml
 spring:
-    profiles: beta
-    security:
-        user:
-            name: admin
-            password: talentbi
     application:
-name: bims-config-eureka-server1
+        name: bims-config-customerservice-client
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource # 配置当前要使用的数据源的操作类型
+        driver-class-name: com.mysql.jdbc.Driver # 配置MySQL的驱动程序类
+        url: jdbc:mysql://localhost:3306/springcloud?serverTimezone=GMT%2B8 # 数据库连接地址
+        username: root # 数据库用户名
+        password: root # 数据库连接密码
+    profiles: beta
+eureka:
+    client: # 客户端进行Eureka注册的配置
+        service-url:
+            defaultZone: http://admin:talentbi@eureka1:7001/eureka
+    instance:
+        instance-id: bims-config-customerservice-client
+        prefer-ip-address: true
+        lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
+        lease-expiration-duration-in-seconds: 5  # 如果现在超过了5秒的间隔（默认是90秒）
+
+#
+info:
+    app.name: bims-config-customerservice-client
+    company.name: zkh
+    build.artifactId: $project.artifactId$
+    build.modelVersion: $project.modelVersion$
+#
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+
+logging:
+    level:
+        com.zkh.bims.mapper: debug
